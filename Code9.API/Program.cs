@@ -1,4 +1,6 @@
+using Code9.Domain.Interfaces;
 using Code9.Infrastructure;
+using Code9.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<CinemaDbContext>(options =>
     options.UseInMemoryDatabase("Cinemas"));
+
+builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
