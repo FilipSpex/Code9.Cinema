@@ -30,9 +30,9 @@ namespace Code9.Infrastructure.Repositories
             return await _dbContext.Cinemas.ToListAsync();
         }
 
-        public async Task<List<Cinema>> UpdateCinema(Cinema cinema)
+        public async Task<Cinema> UpdateCinema(Cinema cinema)
         {
-           Cinema toUpdate = await _dbContext.Cinemas.FirstOrDefaultAsync(c => cinema.Id == c.Id);
+            Cinema toUpdate = await _dbContext.Cinemas.FirstOrDefaultAsync(c => cinema.Id == c.Id);
 
             toUpdate.Name = cinema.Name;
             toUpdate.Street = cinema.Street;
@@ -41,7 +41,7 @@ namespace Code9.Infrastructure.Repositories
 
             await _dbContext.SaveChangesAsync();
 
-            return await _dbContext.Cinemas.ToListAsync();
+            return toUpdate;
         }
     }
 }
