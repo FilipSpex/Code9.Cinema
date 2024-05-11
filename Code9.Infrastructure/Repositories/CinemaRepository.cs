@@ -13,13 +13,16 @@ namespace Code9.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<List<Cinema>> AddCinema(Cinema cinema)
+        public async Task<Cinema> AddCinema(Cinema cinema)
         {
             await _dbContext.Cinemas.AddAsync(cinema);
 
             await _dbContext.SaveChangesAsync();
 
-            return await _dbContext.Cinemas.ToListAsync();
+            var newCinema = await _dbContext.Cinemas.FindAsync(cinema.Id);
+
+            return newCinema;
+
         }
 
         public async Task<List<Cinema>> GetAllCinemas()
