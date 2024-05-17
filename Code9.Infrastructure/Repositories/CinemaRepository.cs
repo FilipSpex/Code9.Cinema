@@ -15,13 +15,11 @@ namespace Code9.Infrastructure.Repositories
 
         public async Task<Cinema> AddCinema(Cinema cinema)
         {
-            await _dbContext.Cinemas.AddAsync(cinema);
+            _dbContext.Cinemas.Add(cinema);
 
             await _dbContext.SaveChangesAsync();
 
-            var newCinema = await _dbContext.Cinemas.FindAsync(cinema.Id);
-
-            return newCinema;
+            return cinema;
 
         }
 
@@ -30,18 +28,18 @@ namespace Code9.Infrastructure.Repositories
             return await _dbContext.Cinemas.ToListAsync();
         }
 
+        public async Task<Cinema> GetCinema(Guid id)
+        {
+            return await _dbContext.Cinemas.FirstOrDefaultAsync(x => x.Id == id);
+        }
+
         public async Task<Cinema> UpdateCinema(Cinema cinema)
         {
-            Cinema toUpdate = await _dbContext.Cinemas.FirstOrDefaultAsync(c => cinema.Id == c.Id);
-
-            toUpdate.Name = cinema.Name;
-            toUpdate.Street = cinema.Street;
-            toUpdate.NumberOfAuditoriums = cinema.NumberOfAuditoriums;
-            toUpdate.City = cinema.City; 
+            _dbContext.Update(cinema);
 
             await _dbContext.SaveChangesAsync();
 
-            return toUpdate;
+            return cinema;
         }
     }
 }
